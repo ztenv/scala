@@ -6,10 +6,14 @@ import com.xunce.pb.TypeDefCls.TypeDef.Exchange
 object test_pb {
     
     def main(args:Array[String])={
-        Console.println(Serialize())
+        val ss=Serialize()
+        Console.println(ss.toString)
+        
+        val msg=Quote.SnapShot.parseFrom(ss)//反序列化
+        Console.println(msg.toString())
     }
     
-    def Serialize():String={
+    def Serialize():Array[Byte]={
         var msg=Quote.SnapShot.newBuilder()
         msg.setCode("000001")
         msg.setExchange(Exchange.EX_SZ)
@@ -20,7 +24,7 @@ object test_pb {
         msg.setOpen(55)
         msg.setLastprice(98)
         msg.setSecTypeValue(0)
-        return msg.toString()
+        return msg.build().toByteArray()//序列化
     }
     
 }
